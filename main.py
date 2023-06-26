@@ -15,7 +15,6 @@ def get_ok():
         #client = TelegramClient('session_name', api_id, api_hash, loop=loop)
         client.start()
         m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
-        time.sleep(2)
         client.delete_messages(entity = -1001694727085, message_ids = [m.id])
         return 'ok', 200
 if __name__ == '__main__':
