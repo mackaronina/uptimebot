@@ -9,7 +9,7 @@ client = TelegramClient('session_name',api_id,api_hash)
 client.start()
 
 app = Flask(__name__)
-
+client.send_message(-1001694727085, 'Server started')
 @app.route('/')
 def get_ok():
     m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
