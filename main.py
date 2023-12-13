@@ -3,8 +3,8 @@ import time
 from flask import Flask
 import asyncio
 
-api_id = 17453825
-api_hash = 'aa6df76596b13eb999078e2e9796ff95'
+api_id = 20319557
+api_hash = '1eb6e800411c9c7cbe90d39db9b7d1c3'
 
 app = Flask(__name__)
 @app.route('/')
