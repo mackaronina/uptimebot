@@ -20,10 +20,11 @@ def generate_text():
             time.sleep(5)
             response = g4f.ChatCompletion.create(
                 model=g4f.models.default,
+                provider=g4f.Provider.GeekGpt,
                 messages=[{'role':'user','content':'Напиши короткое необычное пожелание доброго утра адресованное гражданам Некославии. Это страна населённая некодевочками и некомальчиками, а граждан называют некославами. Некославия к тому же развитая страна которая колонизировала Марс, правителя этой страны называют некокинг.'}]
             )
-        except:
-            pass
+        except Exception as e:
+            print(e)
     print(response)
     return response
 
