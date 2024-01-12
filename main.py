@@ -14,17 +14,12 @@ api_hash = '1eb6e800411c9c7cbe90d39db9b7d1c3'
 app = Flask(__name__)
 
 def generate_text():
-    response = None
-    while response is None:
-        try:
-            time.sleep(5)
-            response = g4f.ChatCompletion.create(
+    time.sleep(5)
+    response = g4f.ChatCompletion.create(
                 model=g4f.models.default,
                 provider=g4f.Provider.GeekGpt,
-                messages=[{'role':'user','content':'Напиши короткое необычное пожелание доброго утра адресованное гражданам Некославии. Это страна населённая некодевочками и некомальчиками, а граждан называют некославами. Некославия к тому же развитая страна которая колонизировала Марс, правителя этой страны называют некокинг.'}]
-            )
-        except Exception as e:
-            print(e)
+                messages=[{'role':'user','content':'Некославия это вымышленная страна. Граждан этой страны называют некославы, а правителя некокинг. Некославия развитая страна которая колонизировала Марс. Также ученым удалось скрестить кошек с людьми и получить некодевочек и некомальчиков, которых очень любят некославы. Самый популярный энергетик в Некославии это "розовый монстр". Напиши короткое необычное пожелание доброго утра для граждан этой страны'}]
+    )
     print(response)
     return response
 
@@ -49,7 +44,8 @@ def get_morning():
         m = client.send_message('@silero_voice_bot', generate_text())
         time.sleep(5)
         m = client.get_messages('@silero_voice_bot', ids=m.id+1)
-        client.forward_messages('@NekocringeBot', m)
+        client.forward_messages('@kakaem12', m)
+        #@NekocringeBot
         return 'ok', 200
 
 if __name__ == '__main__':
