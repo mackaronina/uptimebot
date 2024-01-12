@@ -43,7 +43,7 @@ def get_morning():
         m = client.send_message('@silero_voice_bot', generate_text())
         time.sleep(5)
         m = client.get_messages('@silero_voice_bot', ids=m.id+1)
-        client.forward_messages('@kakaem12', m)
+        client.forward_messages('@NekocringeBot', m)
         #@NekocringeBot
         return 'ok', 200
 
