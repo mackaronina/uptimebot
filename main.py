@@ -54,10 +54,10 @@ def get_getposts():
     with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
         client.start()
         for msg in client.get_messages('@animewebmtg', limit=2):
-            if msg.video is not None and msg.text is not None:
-                client.forward_messages('@kakaem12', msg)
-                client.send_message('@kakaem12', msg.text + 'абба')
-                #@NekocringeBot
+            try:
+                client.forward_messages('@NekocringeBot', msg)
+            except:
+                pass
         return 'ok', 200
 
 if __name__ == '__main__':
