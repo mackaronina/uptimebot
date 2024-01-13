@@ -53,8 +53,9 @@ def get_getposts():
     asyncio.set_event_loop(loop)
     with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
         client.start()
-        for msg in client.get_messages('@animewebmtg', limit=2):
+        for msg in client.get_messages('@animewebmtg', limit=3):
             try:
+                client.send_message(-1001694727085, msg.text + '|а')
                 client.forward_messages('@NekocringeBot', msg)
             except:
                 pass
