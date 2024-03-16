@@ -61,7 +61,9 @@ def get_getposts():
         return 'ok', 200
 
 if __name__ == '__main__':
-    client = TelegramClient('session_name', api_id, api_hash)
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    client = TelegramClient('session_name', api_id, api_hash, loop=loop)
     client.start()
     app.run(host='0.0.0.0',port=80, threaded=False)
 
