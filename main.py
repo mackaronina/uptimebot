@@ -36,6 +36,8 @@ def generate_text():
 
 @app.route('/')
 def get_ok():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
         time.sleep(0.1)
         client.delete_messages(entity=-1001694727085, message_ids=[m.id])
@@ -43,6 +45,8 @@ def get_ok():
 
 @app.route('/morning')
 def get_morning():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         m = client.send_message('@silero_voice_bot', generate_text())
         time.sleep(5)
         m = client.get_messages('@silero_voice_bot', ids=m.id+1)
@@ -52,6 +56,8 @@ def get_morning():
 
 @app.route('/getposts')
 def get_getposts():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         for msg in client.get_messages('@animewebmtg', limit=3):
             if '#NecoArc' in msg.text:
                 try:
