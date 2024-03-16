@@ -52,7 +52,8 @@ def get_morning():
     asyncio.set_event_loop(loop)
     with TelegramClient(StringSession(ses), api_id, api_hash, loop=loop) as client:
         client.start()
-        m = client.send_message('@silero_voice_bot', generate_text())
+        text = generate_text()
+        m = client.send_message('@silero_voice_bot', text)
         time.sleep(5)
         m = client.get_messages('@silero_voice_bot', ids=m.id+1)
         client.forward_messages('@NekocringeBot', m)
