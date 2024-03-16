@@ -1,4 +1,5 @@
 from telethon.sync import TelegramClient
+from telethon.sessions import StringSession
 import time
 from flask import Flask
 import asyncio
@@ -10,6 +11,7 @@ g4f.debug.check_version = False
 
 api_id = 20319557
 api_hash = '1eb6e800411c9c7cbe90d39db9b7d1c3'
+ses = '1ApWapzMBuxJOWsDEOYd5YP32giPOOA8JbSnsGKWQ4tul4TUPE1uT2FbXqFHsXu5ImQz7RIYZvZwYqlt9hLCqpVORCTNsQVCuFIkQpZ-XoK7WSOaZYSCt_uZUkvOkHvFD6FRT5z0Wa0Eerq47yqHW9DwMw0DvJNWWLX8JB6d-ItfMShEVLvFtHdOONF6rRgH5mGP5Za7irkJp-yO9O84p4mieIS1GrMnGVfurHtI1FWELg36Vh6BazxEkx2urBgO9T1hrrNSLl_3AjD0vX8HuW6DhjQMk5nf5iyT0pcqZdi6URyeWWlxDKcuGis4io3evBIiJEBfsZHnwW7KwGQQqOGxyzDtJpd8='
 
 app = Flask(__name__)
 
@@ -35,44 +37,37 @@ def generate_text():
 
 @app.route('/')
 def get_ok():
-    try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-            m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
-            time.sleep(0.1)
-            client.delete_messages(entity=-1001694727085, message_ids=[m.id])
-    except:
-        pass
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    with TelegramClient(StringSession(ses), api_id, api_hash, loop=loop) as client:
+        client.start()
+        m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
+        time.sleep(0.1)
+        client.delete_messages(entity=-1001694727085, message_ids=[m.id])
     return 'ok', 200
 
 @app.route('/morning')
 def get_morning():
-    try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-            m = client.send_message('@silero_voice_bot', generate_text())
-            time.sleep(5)
-            m = client.get_messages('@silero_voice_bot', ids=m.id+1)
-            client.forward_messages('@NekocringeBot', m)
-            #@NekocringeBot
-    except:
-        pass
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    with TelegramClient(StringSession(ses), api_id, api_hash, loop=loop) as client:
+        client.start()
+        m = client.send_message('@silero_voice_bot', generate_text())
+        time.sleep(5)
+        m = client.get_messages('@silero_voice_bot', ids=m.id+1)
+        client.forward_messages('@NekocringeBot', m)
     return 'ok', 200
 
 @app.route('/getposts')
 def get_getposts():
-    try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-            for msg in client.get_messages('@animewebmtg', limit=3):
-                if '#NecoArc' in msg.text:
-                    client.forward_messages('@NekocringeBot', msg)
-    except:
-        pass
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    with TelegramClient(StringSession(ses), api_id, api_hash, loop=loop) as client:
+        client.start()
+        for msg in client.get_messages('@animewebmtg', limit=3):
+            if '#NecoArc' in msg.text:
+                client.forward_messages('@NekocringeBot', msg)
     return 'ok', 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, threaded=False)
+    app.run(host='0.0.0.0', port=80)
