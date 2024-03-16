@@ -13,6 +13,8 @@ api_hash = '1eb6e800411c9c7cbe90d39db9b7d1c3'
 
 app = Flask(__name__)
 client = None
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 def generate_text():
     response = None
@@ -36,7 +38,6 @@ def generate_text():
 
 @app.route('/')
 def get_ok():
-        loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
         time.sleep(0.1)
@@ -45,7 +46,6 @@ def get_ok():
 
 @app.route('/morning')
 def get_morning():
-        loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         m = client.send_message('@silero_voice_bot', generate_text())
         time.sleep(5)
@@ -56,7 +56,6 @@ def get_morning():
 
 @app.route('/getposts')
 def get_getposts():
-        loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         for msg in client.get_messages('@animewebmtg', limit=3):
             if '#NecoArc' in msg.text:
@@ -67,8 +66,6 @@ def get_getposts():
         return 'ok', 200
 
 if __name__ == '__main__':
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     client = TelegramClient('session_name', api_id, api_hash, loop=loop)
     client.start()
     app.run(host='0.0.0.0',port=80, threaded=False)
