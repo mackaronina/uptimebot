@@ -23,7 +23,7 @@ def generate_text():
         )
     except:
         response = g4f.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             provider=g4f.Provider.FlowGpt,
             messages=[{'role':'user','content':'Некославия это страна, граждан которой называют некославы, а мудрого правителя некокинг, её девиз это "Славься Некославия!". Некославия развитая страна которая колонизировала Марс. Также ученым удалось скрестить кошек с людьми и получить некодевочек и некомальчиков, которых очень любят некославы. Самый популярный энергетик в Некославии это "розовый монстр". Вместо машин в Некославии используют некомобили. Напиши короткое необычное пожелание доброго утра для граждан этой страны'}]
         )
@@ -38,9 +38,12 @@ def get_ok():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-        m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
-        time.sleep(0.1)
-        client.delete_messages(entity=-1001694727085, message_ids=[m.id])
+        try:
+            m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
+            time.sleep(0.1)
+            client.delete_messages(entity=-1001694727085, message_ids=[m.id])
+        except:
+            pass
     return 'ok', 200
 
 @app.route('/morning')
@@ -48,11 +51,14 @@ def get_morning():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-        m = client.send_message('@silero_voice_bot', generate_text())
-        time.sleep(5)
-        m = client.get_messages('@silero_voice_bot', ids=m.id+1)
-        client.forward_messages('@NekocringeBot', m)
-        #@NekocringeBot
+        try:
+            m = client.send_message('@silero_voice_bot', generate_text())
+            time.sleep(5)
+            m = client.get_messages('@silero_voice_bot', ids=m.id+1)
+            client.forward_messages('@NekocringeBot', m)
+            #@NekocringeBot
+        except:
+            pass
     return 'ok', 200
 
 @app.route('/getposts')
@@ -60,13 +66,13 @@ def get_getposts():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-        for msg in client.get_messages('@animewebmtg', limit=3):
-            if '#NecoArc' in msg.text:
-                try:
+        try:
+            for msg in client.get_messages('@animewebmtg', limit=3):
+                if '#NecoArc' in msg.text:
                     client.forward_messages('@NekocringeBot', msg)
-                except:
-                    pass
+        except:
+            pass
     return 'ok', 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=80)
+    app.run(host='10.217.220.253',port=80)
