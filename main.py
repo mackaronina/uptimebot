@@ -35,44 +35,44 @@ def generate_text():
 
 @app.route('/')
 def get_ok():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-        try:
+    try:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
             m = client.send_message(-1001694727085, 'Hello! Talking to you from Telethon')
             time.sleep(0.1)
             client.delete_messages(entity=-1001694727085, message_ids=[m.id])
-        except:
-            pass
+    except:
+        pass
     return 'ok', 200
 
 @app.route('/morning')
 def get_morning():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-        try:
+    try:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
             m = client.send_message('@silero_voice_bot', generate_text())
             time.sleep(5)
             m = client.get_messages('@silero_voice_bot', ids=m.id+1)
             client.forward_messages('@NekocringeBot', m)
             #@NekocringeBot
-        except:
-            pass
+    except:
+        pass
     return 'ok', 200
 
 @app.route('/getposts')
 def get_getposts():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
-        try:
+    try:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        with TelegramClient('session_name', api_id, api_hash, loop=loop) as client:
             for msg in client.get_messages('@animewebmtg', limit=3):
                 if '#NecoArc' in msg.text:
                     client.forward_messages('@NekocringeBot', msg)
-        except:
-            pass
+    except:
+        pass
     return 'ok', 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=80)
+    app.run(host='0.0.0.0', port=80, threaded=False)
