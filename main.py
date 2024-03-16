@@ -75,4 +75,4 @@ def get_getposts():
     return 'ok', 200
 
 if __name__ == '__main__':
-    app.run(host='10.217.220.253',port=80)
+    app.run(host='127.0.0.1',port=80)
