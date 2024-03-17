@@ -20,16 +20,10 @@ def generate_text():
     try:
         response = g4f.ChatCompletion.create(
             model="gpt-4",
-            provider=g4f.Provider.ChatgptAi,
             messages=[{'role':'user','content':'Некославия это страна, граждан которой называют некославы, а мудрого правителя некокинг, её девиз это "Славься Некославия!". Некославия развитая страна которая колонизировала Марс. Также ученым удалось скрестить кошек с людьми и получить некодевочек и некомальчиков, которых очень любят некославы. Самый популярный энергетик в Некославии это "розовый монстр". Вместо машин в Некославии используют некомобили. Напиши короткое необычное пожелание доброго утра для граждан этой страны'}]
         )
     except:
-        response = g4f.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            provider=g4f.Provider.FlowGpt,
-            messages=[{'role':'user','content':'Некославия это страна, граждан которой называют некославы, а мудрого правителя некокинг, её девиз это "Славься Некославия!". Некославия развитая страна которая колонизировала Марс. Также ученым удалось скрестить кошек с людьми и получить некодевочек и некомальчиков, которых очень любят некославы. Самый популярный энергетик в Некославии это "розовый монстр". Вместо машин в Некославии используют некомобили. Напиши короткое необычное пожелание доброго утра для граждан этой страны'}]
-        )
-    print(response)
+        response = 'Помогите меня держат в подвале и заставляют записывать эти голосовухи'
     if len(response) > 500:
         time.sleep(2)
         response = generate_text() 
@@ -52,8 +46,7 @@ def get_morning():
     asyncio.set_event_loop(loop)
     with TelegramClient(StringSession(ses), api_id, api_hash, loop=loop) as client:
         client.start()
-        #text = generate_text()
-        m = client.send_message('@silero_voice_bot', 'Проверка')
+        m = client.send_message('@silero_voice_bot', generate_text())
         time.sleep(5)
         m = client.get_messages('@silero_voice_bot', ids=m.id+1)
         client.forward_messages('@NekocringeBot', m)
